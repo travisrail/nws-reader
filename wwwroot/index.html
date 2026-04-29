@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NWS Alert Reader</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">⚠</span>
+        <h1>NWS Alert Reader</h1>
+      </div>
+
+      <div class="topbar-controls">
+        <div class="control-group">
+          <label for="type-select">Lookup</label>
+          <select id="type-select">
+            <option value="national">National (US)</option>
+            <option value="area">State</option>
+            <option value="zone">Zone ID</option>
+            <option value="point">Lat,Lon</option>
+          </select>
+        </div>
+
+        <div class="control-group grow">
+          <label for="value-input">Value</label>
+          <input
+            id="value-input"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="KS"
+          />
+        </div>
+
+        <div class="control-group">
+          <label for="voice-select">Voice</label>
+          <select id="voice-select"></select>
+        </div>
+
+        <div class="control-actions">
+          <button id="refresh-btn" type="button" title="Refresh now (R)">Refresh</button>
+          <button id="fit-btn" type="button" title="Fit map to alerts">Fit</button>
+          <button id="speak-all-btn" type="button" title="Read all visible alerts">🔈 Read All</button>
+          <button id="stop-btn" type="button" title="Stop speaking (Esc)">Stop</button>
+        </div>
+      </div>
+
+      <div class="status" aria-live="polite">
+        <span class="pulse" id="pulse" aria-hidden="true"></span>
+        <span id="status-text">Idle</span>
+      </div>
+    </header>
+
+    <section class="filters" aria-label="Filter alerts by event type">
+      <span class="filter-label">Show:</span>
+      <label class="filter-chip">
+        <input type="checkbox" data-filter="tor-warning" checked />
+        <span>Tornado Warning</span>
+      </label>
+      <label class="filter-chip">
+        <input type="checkbox" data-filter="svr-warning" checked />
+        <span>Severe T-Storm Warning</span>
+      </label>
+      <label class="filter-chip">
+        <input type="checkbox" data-filter="other-warnings" />
+        <span>Other Warnings</span>
+      </label>
+      <label class="filter-chip">
+        <input type="checkbox" data-filter="watches" />
+        <span>Watches</span>
+      </label>
+      <label class="filter-chip">
+        <input type="checkbox" data-filter="other" />
+        <span>Other</span>
+      </label>
+      <span class="filter-count" id="filter-count" aria-live="polite"></span>
+    </section>
+
+    <main class="map-main">
+      <div id="error-banner" class="error-banner hidden" role="alert"></div>
+      <div id="map" aria-label="Map of active alerts"></div>
+      <aside class="cards-strip" aria-label="Alert cards">
+        <div id="empty-state" class="empty-state hidden">
+          <h2>No matching alerts</h2>
+          <p>You're clear, or your filters hide everything.</p>
+        </div>
+        <ul id="alerts" class="alerts" aria-label="Active alerts"></ul>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span>
+        Map ©
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>,
+        tiles ©
+        <a href="https://carto.com/attributions" target="_blank" rel="noreferrer">CARTO</a>.
+        Alerts:
+        <a href="https://www.weather.gov/documentation/services-web-api" target="_blank" rel="noreferrer">api.weather.gov</a>
+      </span>
+      <span id="updated-text">—</span>
+    </footer>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="app.js"></script>
+  </body>
+</html>

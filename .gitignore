@@ -1,0 +1,36 @@
+## .NET
+bin/
+obj/
+out/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## VS / Rider / VSCode
+.vs/
+.idea/
+*.swp
+
+## VS Code: ignore everything except shared workspace configs
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
+!.vscode/extensions.json
+
+## Build output
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+## Logs
+*.log
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Claude Code
+.claude/
